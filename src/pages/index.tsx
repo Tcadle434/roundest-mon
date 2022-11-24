@@ -5,6 +5,7 @@ import { getOptionsForVote } from '@/utils/getRandomPokemon';
 import { useMemo, useState } from 'react';
 import { inferQueryResponse } from './api/trpc/[trpc]';
 import type React from 'react';
+import { PokemonSprites } from 'pokenode-ts';
 
 const btn =
   "inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm font-medium rounded-full text-gray-700 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500";
@@ -29,11 +30,11 @@ export default function Home() {
 
   const voteForRoundest = (selected: number) => {
     // todo: fire mutation to persist changes
-    if (selected === first) {
-      voteMutation.mutate({votedFor: first, votedAgainst: second})
-    } else {
-      voteMutation.mutate({votedFor: second, votedAgainst: first})
-    }
+      if (selected === first) {
+    voteMutation.mutate({votedFor: first, votedAgainst: second})
+  } else {
+    voteMutation.mutate({votedFor: second, votedAgainst: first})
+  }
     updateIds(getOptionsForVote());
     
   }
@@ -58,13 +59,19 @@ export default function Home() {
   )
 }
 
-type PokemonFromServer = inferQueryResponse<"getpokemonbyid">;
+
+// type PokemonFromServer = inferQueryResponse<"getpokemonbyid">;
+
+type PokemonFromServer = {
+  name: string
+  sprites: PokemonSprites
+}
 
 const PokemonListing: React.FC<{pokemon: PokemonFromServer, vote: () => void}> = (props) => {
   console.log("in Pokemon Listing")
   return (
     <div className="flex flex-col items-center"> 
-      <img className="w-64 h-64" src={props.pokemon.sprites.front_default} />
+      <img className="w-64 h-64" src={props.pokemon.sprites.front_default!} />
       <div className="text-xl text-center capitalize mt-[-2rem]">{props.pokemon.name}</div>
       <button className={btn} onClick={() => props.vote()}>Rounder</button>
     </div>
