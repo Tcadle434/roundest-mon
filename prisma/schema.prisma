@@ -9,8 +9,8 @@ generator client {
 datasource db {
   provider             = "mysql"
   url                  = env("DATABASE_URL")
-  referentialIntegrity = "prisma"
   shadowDatabaseUrl    = env("SHADOW_URL")
+  referentialIntegrity = "prisma"
 }
 
 model Vote {
@@ -20,6 +20,9 @@ model Vote {
   votedForId     Int
   votedAgainst   Pokemon  @relation(name: "votesAgainst", fields: [votedAgainstId], references: [id])
   votedAgainstId Int
+
+  @@index([votedForId])
+  @@index([votedAgainstId])
 }
 
 model Pokemon {
