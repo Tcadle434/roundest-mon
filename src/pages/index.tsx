@@ -63,15 +63,16 @@ export default function Home() {
 // type PokemonFromServer = inferQueryResponse<"getpokemonbyid">;
 
 type PokemonFromServer = {
+  id: number,
   name: string
-  sprites: PokemonSprites
+  spriteUrl: string
 }
 
 const PokemonListing: React.FC<{pokemon: PokemonFromServer, vote: () => void}> = (props) => {
   console.log("in Pokemon Listing")
   return (
     <div className="flex flex-col items-center"> 
-      <Image width={256} height={256} layout="fixed" alt="alt text" src={props.pokemon.sprites.front_default!} />
+      <Image width={256} height={256} layout="fixed" alt="alt text" src={props.pokemon.spriteUrl} />
       <div className="text-xl text-center capitalize mt-[-2rem]">{props.pokemon.name}</div>
       <button className={btn} onClick={() => props.vote()}>Rounder</button>
     </div>
