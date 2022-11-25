@@ -21,9 +21,3 @@ CREATE TABLE `Pokemon` (
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateIndex
-CREATE INDEX `Vote_votedForId_idx` ON `Vote`(`votedForId`);
-
--- CreateIndex
-CREATE INDEX `Vote_votedAgainstId_idx` ON `Vote`(`votedAgainstId`);
